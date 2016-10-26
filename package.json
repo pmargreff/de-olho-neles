@@ -1,0 +1,14 @@
+{
+  "name": "serenata-de-amor-visualization",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "pmargreff, jschneiders",
+  "license": "MIT",
+  "dependencies": {
+    "angular-ui-router": "^0.3.1"
+  }
+}
