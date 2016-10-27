@@ -57,10 +57,27 @@ function init() {
     .attr("x", function(d) { return x(d.state); })
     .attr("y", function(d) { return y(d.value); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.value); });
+    .attr("height", function(d) { return height - y(d.value); })
+    .on('mouseover', function (d) {
+      coordinates = d3.mouse(this);
+      
+      d3.select("#tooltip")
+      .style("left", coordinates[0]  + "px")
+      .style("top", coordinates[1] + "px")
+      .select("#info")
+      .text(tooltipText(d));
+      
+      d3.select("#tooltip").classed("hidden", false);
+    })
+    .on("mouseout", function() {
+      d3.select("#tooltip").classed("hidden", true);
+    });
   });
 }
 
+function tooltipText(d) {
+      return 'Value: R$ ' + d.value.toFixed(2) + ' \nState: ' + d.state;
+}
 
 function update(month) {
   
