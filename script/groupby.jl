@@ -1,7 +1,7 @@
 using DataFrames
 
 function groupbystate(df, name)
-  groupdf = by(df, [:state, :month], df -> sum(df[:net_value]))
+  groupdf = by(df, [:state], df -> sum(df[:net_value]))
   
   outputfile = string("data/",name,"bystate.csv")
 
@@ -35,8 +35,8 @@ function main()
   df = readtable(inputpath)
   
   groupbystate(df, inputfile)
-  groupbyperson(df, inputfile)
-  groupbypersonandsubquota(df, inputfile)
+  # groupbyperson(df, inputfile)
+  # groupbypersonandsubquota(df, inputfile)
 end
 
 main()

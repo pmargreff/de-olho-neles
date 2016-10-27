@@ -19,4 +19,8 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/view2",
       templateUrl: "partials/view2.html"
     })  
+    .state('view3', {
+      url: "/view3",
+      templateUrl: "partials/view3.html"
+    })  
 });
