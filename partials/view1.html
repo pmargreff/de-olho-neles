@@ -1,3 +1,37 @@
-<h3>By state</h3>
-<svg width="960" height="500"></svg>
-<script type="text/javascript" src="js/bystate.js"></script>
+<div ng-controller="StateController">
+  <h3>By state</h3>
+  <div class="row">
+    <div class="col s6">
+      <div class="input-field col s12">
+        <select>
+          <option value="2015" selected>2015</option>
+        </select>
+        <label>Select year:</label>
+      </div>
+      
+    </div>
+    <div class="col s6">
+      <div class="input-field col s12">
+        <select  ng-change="update_select()" ng-model="selection">
+          <option value="1" selected>Janeiro</option>
+          <option value="2">Fevereiro</option>
+          <option value="3">Março</option>
+          <option value="4">Abril</option>
+          <option value="5">Maior</option>
+          <option value="6">Junho</option>
+          <option value="7">Julho</option>
+          <option value="8">Agosto</option>
+          <option value="9">Setembro</option>
+          <option value="10">Outubro</option>
+          <option value="11">Novembro</option>
+          <option value="12">Dezembro</option>
+        </select>
+        <label>Select month:</label>
+      </div>
+      
+    </div>
+  </div>
+  <svg width="960" height="500"></svg>
+  <script type="text/javascript" src="./js/bystate.js"></script>
+  <script type="text/javascript" src="./js/view1.js"></script>
+</div>
