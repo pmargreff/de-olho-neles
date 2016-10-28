@@ -12,7 +12,8 @@
     </div>
     <div class="col s6">
       <div class="input-field col s12">
-        <select  ng-change="update_select()" ng-model="selection">
+        <select  ng-change="update_select(selection)" ng-model="selection">
+          <option style="display:none" value="">select </option>
           <option value="1" selected>Janeiro</option>
           <option value="2">Fevereiro</option>
           <option value="3">Março</option>

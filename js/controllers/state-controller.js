@@ -1,6 +1,7 @@
 angular.module('serenata-de-amor-visualization').controller('StateController', function ($scope, $http) {
-  $scope.update_select = function() {
+  $scope.update_select = function(val) {
     update($scope.selection)
+    
   };
     
   init();
