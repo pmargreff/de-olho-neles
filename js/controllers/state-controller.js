@@ -61,10 +61,9 @@ function init() {
     .attr("height", function(d) { return height - y(d.value); })
     .on('mouseover', function (d) {
       coordinates = d3.mouse(this);
-      
-      d3.select("#tooltip")
+      d3.select(".relative")
       .style("left", coordinates[0]  + "px")
-      .style("top", coordinates[1] + "px")
+      .style("top", (coordinates[1] - 60) + "px")
       .select("#info")
       .text(tooltipText(d));
       

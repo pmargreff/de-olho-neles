@@ -20,6 +20,10 @@ header, main, footer {
   display: none;
 }
 
+.relative{
+	position: relative;
+}
+
 #tooltip {
 	position: absolute;
 	width: 200px;
