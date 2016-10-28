@@ -4,9 +4,9 @@ function groupbystate(df, name)
   groupdf = by(df, [:state], df -> sum(df[:net_value]))
   
   outputfile = string("data/",name,"bystate.csv")
-
+  
   writetable(outputfile, groupdf)
-
+  
 end
 
 function groupbycompany(df, name)
@@ -18,17 +18,29 @@ function groupbycompany(df, name)
   
   deleterows!(groupdf, 1:nrows - 100)
   
-  writetable(outputfile, groupdf)
+  groupdf[:cnpj_cpf] = map((x) -> x, string("NA"))
+  groupbydf = groupby(df, [:supplier])
+  
+  for row in eachrow(groupdf)
+    for item in groupbydf
+      itemname = item[:supplier]
+      if itemname[1] == row[:supplier] 
+        ident = item[:cnpj_cpf]
+        row[:cnpj_cpf] = string(ident[1])
+      end
+    end
+  end
 
+  writetable(outputfile, groupdf)
 end
 
 function groupbypersonandsubquota(df, name)
   groupdf = by(df, [:congressperson_name, :subquota_description], df -> sum(df[:net_value]))
   
   outputfile = string("data/bypersonandsubquota",name,".csv")
-
+  
   writetable(outputfile, groupdf)
-
+  
 end
 
 
