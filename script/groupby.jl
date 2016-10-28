@@ -9,11 +9,15 @@ function groupbystate(df, name)
 
 end
 
-function groupbyperson(df, name)
-  groupdf = by(df, [:congressperson_name], df -> sum(df[:net_value]))
+function groupbycompany(df, name)
+  groupdf = by(df, [:supplier], df -> sum(df[:net_value]))
   
-  outputfile = string("data/",name,"byperson.csv")
-
+  nrows, ncolumns = size(groupdf)
+  outputfile = string("data/bycompany",name,".csv")
+  sort!(groupdf, cols = [order(:x1)])
+  
+  deleterows!(groupdf, 1:nrows - 100)
+  
   writetable(outputfile, groupdf)
 
 end
@@ -21,7 +25,7 @@ end
 function groupbypersonandsubquota(df, name)
   groupdf = by(df, [:congressperson_name, :subquota_description], df -> sum(df[:net_value]))
   
-  outputfile = string("data/",name,"bypersonandsubquota.csv")
+  outputfile = string("data/bypersonandsubquota",name,".csv")
 
   writetable(outputfile, groupdf)
 
@@ -34,8 +38,8 @@ function main()
   
   df = readtable(inputpath)
   
-  groupbystate(df, inputfile)
-  # groupbyperson(df, inputfile)
+  # groupbystate(df, inputfile)
+  groupbycompany(df, inputfile)
   # groupbypersonandsubquota(df, inputfile)
 end
 

@@ -1,1 +1,81 @@
-<h2>view2</h2>
+<h3>By company</h3>
+<div id="container" style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>
+ <script type="text/javascript">
+ 
+d3.csv("/data/bycompany2015.csv", function(data) {
+  $(function () {
+    normalizedData = createData(data);
+    console.log(normalizedData);
+    // console.log(normalizedData);
+    $('#container').highcharts({
+      
+      chart: {
+        type: 'heatmap',
+        marginTop: 40,
+        marginBottom: 80,
+        plotBorderWidth: 1
+      },
+      
+      
+      title: {
+        text: ''
+      },
+      
+      xAxis: {
+        categories: ['', '', '', '', '', '', '', '', '', '']
+      },
+      
+      yAxis: {
+        categories: ['', '', '', '', '', '', '', '', '', ''],
+        title: null
+      },
+      
+      colorAxis: {
+        min: 0,
+        minColor: '#FFFFFF',
+        maxColor: Highcharts.getOptions().colors[0]
+      },
+      
+      legend: {
+        align: 'right',
+        layout: 'vertical',
+        margin: 0,
+        verticalAlign: 'top',
+        y: 25,
+        symbolHeight: 280
+      },
+      
+      tooltip: {
+        formatter: function () {
+          return '</b> value: R$<br><b>' + this.point.value.toFixed(0) + '</b> <br>';
+        }
+      },
+      series: [{
+        name: 'Sales per employee',
+        borderWidth: 1,
+        data: normalizedData,
+        dataLabels: {
+          enabled: true,
+          color: '#000000'
+        }
+      }]
+      
+    });
+  });
+});
+
+function createData(data) {
+  newArr = [];
+  for (var i = 0; i < 100; i++) {
+    subArr = [];
+    subArr.push(parseInt(i / 10));
+    subArr.push(i % 10);
+    val = parseInt(parseFloat(data[i].value));
+    subArr.push(val);
+    newArr.push(subArr);
+  }
+  
+  return newArr;
+}
+
+</script>
