@@ -9,29 +9,49 @@ function groupbystate(df)
   
 end
 
-function groupbycompany(df, name)
-  groupdf = by(df, [:supplier], df -> sum(df[:net_value]))
+function groupbycompany(df)
+  # agrupar por ano - ok
+  # somar sem mais custosos - ok
+  # concatenar arquivo
   
-  nrows, ncolumns = size(groupdf)
-  outputfile = string("data/bycompany",name,".csv")
-  sort!(groupdf, cols = [order(:x1)])
+  dffinal = DataFrame()
+  dffinal[:supplier] = ["p"]
+  dffinal[:x1] = 1:1
+  dffinal[:cnpj_cpf] = ["p"]
+  dffinal[:year] = 1:1
+  deleterows!(dffinal, 1:1)
   
-  deleterows!(groupdf, 1:nrows - 100)
+  dfbyyear = groupby(df, [:year])
   
-  groupdf[:cnpj_cpf] = map((x) -> x, string("NA"))
-  groupbydf = groupby(df, [:supplier])
+  dfbysupplier = groupby(df, [:supplier])
   
-  for row in eachrow(groupdf)
-    for item in groupbydf
-      itemname = item[:supplier]
-      if itemname[1] == row[:supplier] 
-        ident = item[:cnpj_cpf]
-        row[:cnpj_cpf] = string(ident[1])
+  
+  for subdf in dfbyyear
+    year = (subdf[[1], [:year]])
+    groupdf = by(subdf, [:supplier], subdf -> sum(subdf[:net_value]))
+    sort!(groupdf, cols = [order(:x1)])
+    
+    nrows, ncolumns = size(groupdf)
+    deleterows!(groupdf, 1:nrows - 100)
+    
+    groupdf[:cnpj_cpf] = map((x) -> x, string("NA"))    
+    groupdf[:year] = map((x) -> x, year[:year][1])    
+    
+    for row in eachrow(groupdf)
+      for item in dfbysupplier
+        itemname = item[:supplier]
+        if itemname[1] == row[:supplier] 
+          ident = item[:cnpj_cpf]
+          row[:cnpj_cpf] = string(ident[1])
+        end
       end
     end
+    
+    dffinal = vcat(dffinal, groupdf)
   end
-
-  writetable(outputfile, groupdf)
+  
+  outputfile = string("data/bycompany.csv")
+  writetable(outputfile, dffinal)
 end
 
 function groupbypersonandsubquota(df, name)
@@ -48,7 +68,7 @@ function merge_dataframes(file1, file2, file3)
   df1 = readtable(file1)
   df2 = readtable(file2)
   df3 = readtable(file3)
-
+  
   newdf = vcat(df1, df2)
   newdf = vcat(newdf, df3)
   
@@ -70,8 +90,8 @@ function main()
   finalfile = string("data/allyearsdata.csv")
   df = readtable(finalfile)
   
-  groupbystate(df)
-  # groupbycompany(df, inputfile)
+  # groupbystate(df)
+  groupbycompany(df)
   # groupbypersonandsubquota(df, inputfile)
   
 end
