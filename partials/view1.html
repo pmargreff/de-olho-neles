@@ -3,8 +3,15 @@
   <div class="row">
     <div class="col s6">
       <div class="input-field col s12">
-        <select>
-          <option value="2015" selected>2015</option>
+        <select ng-change="update(selection_month,selection_year)" ng-model="selection_year">
+          <option value="2009">2009</option>
+          <option value="2010">2010</option>
+          <option value="2011">2011</option>
+          <option value="2012">2012</option>
+          <option value="2013">2013</option>
+          <option value="2014">2014</option>
+          <option value="2015">2015</option>
+          <option value="2016" selected>2016</option>
         </select>
         <label>Select year:</label>
       </div>
@@ -12,8 +19,8 @@
     </div>
     <div class="col s6">
       <div class="input-field col s12">
-        <select  ng-change="update_select(selection)" ng-model="selection">
-          <option style="display:none" value="">select </option>
+        <select ng-change="update(selection_month,selection_year)" ng-model="selection_month">
+          <option value="" disabled>Select</option>
           <option value="1" selected>January</option>
           <option value="2">February</option>
           <option value="3">March</option>

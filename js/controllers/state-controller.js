@@ -1,15 +1,22 @@
 angular.module('serenata-de-amor-visualization').controller('StateController', function ($scope, $http) {
-  $scope.update_select = function(val) {
-    update($scope.selection)
+  start_year = 2016;
+  start_month = 1;
+  
+  $scope.update = function(month, year) {
+    if (!month) {
+      month = 1;
+    }
+    
+    if (!year) {
+      year = 2016;
+    }
+  
+    update(month, year);
     
   };
     
   init();
 });
-
-// var q = d3.queue();
-// q.defer(d3.csv, "./data/bystate2015.csv");
-// q.awaitAll(init);
 
 var globalData = [];
 
@@ -25,10 +32,10 @@ function init() {
   var g = svg.append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   
-  d3.csv("./data/bystate2015.csv", function(d) {
+  d3.csv("./data/bystate.csv", function(d) {
     globalData.push(d);
-    if (d.month == 1) {    
-      d.value = +d.value;
+    if (d.month == 1 && d.year == 2016) {    
+      d.x1 = +d.x1;
       return d;
     }
   }, function(error, data) {
@@ -56,9 +63,9 @@ function init() {
     .enter().append("rect")
     .attr("class", "bar")
     .attr("x", function(d) { return x(d.state); })
-    .attr("y", function(d) { return y(d.value); })
+    .attr("y", function(d) { return y(d.x1); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.value); })
+    .attr("height", function(d) { return height - y(d.x1); })
     .on('mouseover', function (d) {
       coordinates = d3.mouse(this);
       d3.select(".relative")
@@ -76,15 +83,15 @@ function init() {
 }
 
 function tooltipText(d) {
-      return 'Value: R$ ' + d.value.toFixed(2) + ' \nState: ' + d.state;
+      return 'Value: R$ ' + d.x1.toFixed(2) + ' \nState: ' + d.state;
 }
 
-function update(month) {
+function update(month, year) {
   
   data = []
   
   for (var i = 0; i < globalData.length; i++) {
-    if (globalData[i].month == month) {
+    if (globalData[i].month == month && globalData[i].year == year) {
       data.push(globalData[i]);
     }
   }
@@ -107,14 +114,14 @@ function update(month) {
   .attr("height", function(d) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].state == d.state) {
-        return height - y(data[i].value);
+        return height - y(data[i].x1);
       }
     }
   })
   .attr("transform", function(d) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].state == d.state) {
-        return "translate(" + [0, (-this.y.baseVal.value + y(data[i].value))] + ")"
+        return "translate(" + [0, (-this.y.baseVal.value + y(data[i].x1))] + ")"
       }
     }
   })

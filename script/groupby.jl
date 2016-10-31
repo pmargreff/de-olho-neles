@@ -1,9 +1,9 @@
 using DataFrames
 
-function groupbystate(df, name)
-  groupdf = by(df, [:state], df -> sum(df[:net_value]))
+function groupbystate(df)
+  groupdf = by(df, [:state, :year, :month], df -> sum(df[:net_value]))
   
-  outputfile = string("data/",name,"bystate.csv")
+  outputfile = string("data/bystate.csv")
   
   writetable(outputfile, groupdf)
   
@@ -43,16 +43,37 @@ function groupbypersonandsubquota(df, name)
   
 end
 
+function merge_dataframes(file1, file2, file3)
+  
+  df1 = readtable(file1)
+  df2 = readtable(file2)
+  df3 = readtable(file3)
+
+  newdf = vcat(df1, df2)
+  newdf = vcat(newdf, df3)
+  
+  outputfile = string("data/allyearsdata.csv")
+  writetable(outputfile, newdf)
+  
+  return outputfile
+end
 
 function main()
-  inputfile = "2015"
-  inputpath = string("data/",inputfile,".csv")
+  # inputfile1 = "2016-08-08-previous-years"
+  # inputfile2 = "2016-08-08-last-year"
+  # inputfile3 = "2016-08-08-current-year"
+  # inputpath1 = string("data/",inputfile1,".csv")
+  # inputpath2 = string("data/",inputfile2,".csv")
+  # inputpath3 = string("data/",inputfile3,".csv")
   
-  df = readtable(inputpath)
+  # merge_dataframes(inputpath1, inputpath2, inputpath3)
+  finalfile = string("data/allyearsdata.csv")
+  df = readtable(finalfile)
   
-  # groupbystate(df, inputfile)
-  groupbycompany(df, inputfile)
+  groupbystate(df)
+  # groupbycompany(df, inputfile)
   # groupbypersonandsubquota(df, inputfile)
+  
 end
 
 main()
