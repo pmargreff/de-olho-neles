@@ -54,46 +54,59 @@ function groupbycompany(df)
   writetable(outputfile, dffinal)
 end
 
-function groupbypersonandsubquota(df, name)
+function groupbypersonandsubquota(df)
   groupdf = by(df, [:congressperson_name, :subquota_description], df -> sum(df[:net_value]))
   
-  outputfile = string("data/bypersonandsubquota",name,".csv")
+  outputfile = string("data/bypersonandsubquota.csv")
   
   writetable(outputfile, groupdf)
   
 end
 
-function merge_dataframes(file1, file2, file3)
+function merge_dataframes(files)
   
-  df1 = readtable(file1)
-  df2 = readtable(file2)
-  df3 = readtable(file3)
+  newdf = readtable(files[2])
+  if length(files) > 2
+    for i in 3:length(files)
+      concatdf = readtable(files[i])
+      newdf = vcat(newdf, concatdf)
+    end
+  end
   
-  newdf = vcat(df1, df2)
-  newdf = vcat(newdf, df3)
-  
-  outputfile = string("data/allyearsdata.csv")
+  outputfile = string("data/final.csv")
   writetable(outputfile, newdf)
   
   return outputfile
 end
 
-function main()
-  # inputfile1 = "2016-08-08-previous-years"
-  # inputfile2 = "2016-08-08-last-year"
-  # inputfile3 = "2016-08-08-current-year"
-  # inputpath1 = string("data/",inputfile1,".csv")
-  # inputpath2 = string("data/",inputfile2,".csv")
-  # inputpath3 = string("data/",inputfile3,".csv")
-  
-  # merge_dataframes(inputpath1, inputpath2, inputpath3)
-  finalfile = string("data/allyearsdata.csv")
-  df = readtable(finalfile)
-  
-  # groupbystate(df)
-  groupbycompany(df)
-  # groupbypersonandsubquota(df, inputfile)
-  
-end
 
-main()
+if length(ARGS) != 0
+  if ARGS[1] == "merge"
+    println("please wait, creating file ...")
+    merge_dataframes(ARGS)
+    println("file created")
+  elseif ARGS[1] == "create"
+    
+    finalfile = string("data/final.csv")
+    
+    println("Loading file ...")
+    df = readtable(finalfile)
+    println("File loaded.")
+    
+    println("Group by state ...")
+    groupbystate(df)
+    println("Group by state finished.")
+    
+    println("Group by company ...")
+    groupbycompany(df)
+    println("Group by company finished.")
+    
+    println("Group by person ...")
+    groupbypersonandsubquota(df)
+    println("Group by person finished.")
+  else
+    println("Params error, check the README file!")
+  end
+else 
+  println("Params error, check the README file!")
+end
