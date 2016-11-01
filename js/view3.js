@@ -29,7 +29,7 @@ var svg = d3.select('body')
 
 
 function create_data(){
-    d3.csv("data/bypersonandsubquota2015.csv", function(error, data){
+    d3.csv("data/bypersonandsubquota.csv", function(error, data){
         if (error) throw error;
 
         console.time("concatenation");
@@ -69,4 +69,3 @@ function create_data(){
 
     });
 }
-
