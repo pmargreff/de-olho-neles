@@ -32,8 +32,7 @@
 
 <div class="radarChart"></div>
 
-<script src="./js/radarChart.js"></script>	
-<script>
+  <script>
   ////////////////////////////////////////////////////////////// 
   //////////////////////// Set-Up ////////////////////////////// 
   ////////////////////////////////////////////////////////////// 
@@ -47,7 +46,7 @@
   ////////////////////////////////////////////////////////////// 
   
   var color = d3.scale.ordinal()
-  .range(["#EDC951","#CC333F","#00A0B0"]);
+  .range(["#00A0B0"]);
   
   var radarChartOptions = {
     w: width,
@@ -60,7 +59,8 @@
   };
   
   //Load the data and Call function to draw the Radar chart
-  d3.json("./json.json", function(error, data){
+  d3.json("./data/teste.json", function(error, data){
+    console.log(data);
     RadarChart(".radarChart", data, radarChartOptions);
   });
   

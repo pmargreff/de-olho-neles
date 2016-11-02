@@ -1,4 +1,5 @@
-using DataFrames
+using JSON 
+using DataFrames 
 
 function groupbystate(df)
   groupdf = by(df, [:state, :year, :month], df -> sum(df[:net_value]))
@@ -9,11 +10,7 @@ function groupbystate(df)
   
 end
 
-function groupbycompany(df)
-  # agrupar por ano - ok
-  # somar sem mais custosos - ok
-  # concatenar arquivo
-  
+function groupbycompany(df)  
   dffinal = DataFrame()
   dffinal[:supplier] = ["p"]
   dffinal[:x1] = 1:1
@@ -55,12 +52,37 @@ function groupbycompany(df)
 end
 
 function groupbypersonandsubquota(df)
-  groupdf = by(df, [:congressperson_name, :subquota_description], df -> sum(df[:net_value]))
+  groupdf = by(df, [:subquota_description,:congressperson_name], df -> sum(df[:net_value]))
   
-  outputfile = string("data/bypersonandsubquota.csv")
+  rename!(groupdf, :x1, :value)
+  rename!(groupdf, :subquota_description, :axis)
   
-  writetable(outputfile, groupdf)
+  outputfile = string("data/teste.json")
   
+  writejson(outputfile, groupdf)
+  # writetable(outputfile, groupdf)
+  
+end
+
+function df2json(df::DataFrame)
+  len = length(df[:,1])
+  indices = names(df)
+  name = df[2][1]
+  values = [Dict(string(index) => (isna(df[index][i])? nothing : df[index][i])
+                     for index in indices)
+               for i in 1:len]
+                 
+  obj = Dict(string("values") => values,string("key") => df[2][1])
+                 
+  return JSON.json(obj)
+end
+
+function writejson(path::String,df::DataFrame)
+  f = open(path,"w")
+    write(f,"[")
+    write(f,df2json(df))
+    write(f,"]")
+  close(f)
 end
 
 function merge_dataframes(files)
@@ -87,19 +109,19 @@ if length(ARGS) != 0
     println("file created")
   elseif ARGS[1] == "create"
     
-    finalfile = string("data/final.csv")
+    finalfile = string("data/teste.csv")
     
     println("Loading file ...")
     df = readtable(finalfile)
     println("File loaded.")
     
-    println("Group by state ...")
-    groupbystate(df)
-    println("Group by state finished.")
+    # println("Group by state ...")
+    # groupbystate(df)
+    # println("Group by state finished.")
     
-    println("Group by company ...")
-    groupbycompany(df)
-    println("Group by company finished.")
+    # println("Group by company ...")
+    # groupbycompany(df)
+    # println("Group by company finished.")
     
     println("Group by person ...")
     groupbypersonandsubquota(df)
