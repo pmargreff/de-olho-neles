@@ -1,38 +1,67 @@
-<div >
-  <h3>By subquota</h3>
-  <div class="row">
-    <div class="col s6">
-      <div class="input-field col s12">
-        <select>
-          <option value="2015" selected>2015</option>
-        </select>
-        <label>Select year:</label>
-      </div>
-      
-    </div>
-    <!--<div class="col s6">
-      <div class="input-field col s12">
-        <select  ng-change="update_select(selection)" ng-model="selection">
-          <option style="display:none" value="">select </option>
-          <option value="1" selected>Janeiro</option>
-          <option value="2">Fevereiro</option>
-          <option value="3">Março</option>
-          <option value="4">Abril</option>
-          <option value="5">Maior</option>
-          <option value="6">Junho</option>
-          <option value="7">Julho</option>
-          <option value="8">Agosto</option>
-          <option value="9">Setembro</option>
-          <option value="10">Outubro</option>
-          <option value="11">Novembro</option>
-          <option value="12">Dezembro</option>
-        </select>
-        <label>Select month:</label>
-      </div>-->
-      
-    </div>
-    
-  <div id="chart"></div>
+<!-- Google fonts -->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+<!-- Set D3 version 3  -->
+<script type="text/javascript">
+  d3 = d3version3;
+</script>
+
+<!-- D3.js -->  
+ <style>
+.radarChart {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  fill: #242424;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  cursor: default;
+}
+
+.legend {
+  font-family: 'Raleway', sans-serif;
+  fill: #333333;
+}
+
+.tooltip {
+  fill: #333333;
+}
+</style>
+
+
+<div class="radarChart"></div>
+
+<script src="./js/radarChart.js"></script>	
+<script>
+  ////////////////////////////////////////////////////////////// 
+  //////////////////////// Set-Up ////////////////////////////// 
+  ////////////////////////////////////////////////////////////// 
   
-  <script type="text/javascript" src="./js/view3.js"></script>
-</div>
+  var margin = {top: 100, right: 100, bottom: 100, left: 100},
+  width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+  height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
+  
+  ////////////////////////////////////////////////////////////// 
+  //////////////////// Draw the Chart ////////////////////////// 
+  ////////////////////////////////////////////////////////////// 
+  
+  var color = d3.scale.ordinal()
+  .range(["#EDC951","#CC333F","#00A0B0"]);
+  
+  var radarChartOptions = {
+    w: width,
+    h: height,
+    margin: margin,
+    maxValue: 0.5,
+    levels: 5,
+    roundStrokes: true,
+    color: color
+  };
+  
+  //Load the data and Call function to draw the Radar chart
+  d3.json("./json.json", function(error, data){
+    RadarChart(".radarChart", data, radarChartOptions);
+  });
+  
+</script>
