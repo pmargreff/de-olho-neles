@@ -58,13 +58,12 @@ function groupbypersonandsubquota(df)
   rename!(groupdf, :subquota_description, :axis)
   
   outputfile = string("data/teste.json")
-  
   writejson(outputfile, groupdf)
   # writetable(outputfile, groupdf)
   
 end
 
-function df2json(df::DataFrame)
+function df2json(df::DataFrames.SubDataFrame{Array{Int64,1}})
   len = length(df[:,1])
   indices = names(df)
   name = df[2][1]
@@ -78,9 +77,19 @@ function df2json(df::DataFrame)
 end
 
 function writejson(path::String,df::DataFrame)
+  dfbyperson = groupby(df, [:congressperson_name])
+  size = length(dfbyperson)
+  i = 1
   f = open(path,"w")
-    write(f,"[")
-    write(f,df2json(df))
+  
+  write(f,"[")
+    for subdf in dfbyperson
+      write(f,"[")
+      write(f,df2json(subdf))
+      println(df2json(subdf))
+      i == size ? write(f,"]") : write(f,"],")
+      i += 1
+    end
     write(f,"]")
   close(f)
 end
