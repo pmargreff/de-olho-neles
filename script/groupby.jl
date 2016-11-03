@@ -1,12 +1,18 @@
+e 
 using JSON 
 using DataFrames 
 
 function groupbystate(df)
-  groupdf = by(df, [:state, :year, :month], df -> sum(df[:net_value]))
+  groupdf = by(df, [:state, :year, :month, :congressperson_name], df -> sum(df[:net_value]))
+  
+  groupbypeople = by(groupdf, [:state, :year, :month], nrow)
+  groupbyvalue = by(df, [:state, :year, :month], df -> sum(df[:net_value]))
+  groupbyvalue[:people] = map((x) -> x, groupbypeople[:x1])
+  groupbyvalue[:mean] = map((x,y) -> x/y, groupbyvalue[:x1], groupbyvalue[:people])
   
   outputfile = string("data/bystate.csv")
-  
-  writetable(outputfile, groupdf)
+
+  writetable(outputfile, groupbyvalue)
   
 end
 
@@ -135,17 +141,17 @@ if length(ARGS) != 0
     groupbystate(df)
     println("Group by state finished.")
     
-    println("Group by company ...")
-    groupbycompany(df)
-    println("Group by company finished.")
+    # println("Group by company ...")
+    # groupbycompany(df)
+    # println("Group by company finished.")
     
-    println("Group by person and state ...")
-    groupbypersonandstate(df)
-    println("Group by person and state finished.")
-    
-    println("Group by person and subquota ...")
-    groupbypersonandsubquota(df)
-    println("Group by person and subquota finished.")
+    # println("Group by person and state ...")
+    # groupbypersonandstate(df)
+    # println("Group by person and state finished.")
+    # 
+    # println("Group by person and subquota ...")
+    # groupbypersonandsubquota(df)
+    # println("Group by person and subquota finished.")
   else
     println("Params error, check the README file!")
   end

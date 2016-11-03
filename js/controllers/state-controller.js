@@ -35,13 +35,13 @@ function init() {
   d3.csv("./data/bystate.csv", function(d) {
     globalData.push(d);
     if (d.month == 1 && d.year == 2016) {    
-      d.x1 = +d.x1;
+      d.mean = +d.mean;
       return d;
     }
   }, function(error, data) {
     if (error) throw error;
     x.domain(data.map(function(d) { return d.state; }));
-    y.domain([0, 3.03511499e6]);
+    y.domain([0, Math.max.apply(Math, globalData.map(function(d) { return d.mean; }))]);
     
     g.append("g")
     .attr("class", "axis axis--x")
@@ -50,7 +50,7 @@ function init() {
     
     g.append("g")
     .attr("class", "axis axis--y")
-    .call(d3.axisLeft(y).ticks(4).tickFormat(d3.formatPrefix(".1", 1e6)))
+    .call(d3.axisLeft(y).ticks(4).tickFormat(d3.formatPrefix(".1", 1e4)))
     .append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 6)
@@ -58,14 +58,15 @@ function init() {
     .attr("text-anchor", "end")
     .text("Frequency");
     
+    
     g.selectAll(".bar")
     .data(data)
     .enter().append("rect")
     .attr("class", "bar")
     .attr("x", function(d) { return x(d.state); })
-    .attr("y", function(d) { return y(d.x1); })
+    .attr("y", function(d) { return y(d.mean); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.x1); })
+    .attr("height", function(d) { return height - y(d.mean); })
     .on('mouseover', function (d) {
       coordinates = d3.mouse(this);
       d3.select(".relative")
@@ -83,7 +84,10 @@ function init() {
 }
 
 function tooltipText(d) {
-      return 'Value: R$ ' + d.x1.toFixed(2) + ' \nState: ' + d.state;
+      return 'Mean value: R$ ' + parseFloat(d.mean).toFixed(0) + 
+      ' Total value: R$ ' + parseFloat(d.x1).toFixed(0) + 
+      ' Number of persons: '+ d.people +
+      ' State: ' + d.state;
 }
 
 function update(month, year) {
@@ -95,6 +99,10 @@ function update(month, year) {
       data.push(globalData[i]);
     }
   }
+  
+  
+  d3.selectAll(".bar").data(data);
+  
     
   var svg = d3.select("svg"),
   margin = {top: 20, right: 20, bottom: 30, left: 40},
@@ -104,9 +112,9 @@ function update(month, year) {
   var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
   y = d3.scaleLinear().rangeRound([height, 0]);
   
-  y.domain([0, 3.03511499e6]);
-  
+  y.domain([0, Math.max.apply(Math, globalData.map(function(d) { return d.mean; }))]);
   // THIS IS THE ACTUAL WORK!
+  
   var bars = svg.selectAll(".bar")
   .attr("stroke-width", 4)
   .transition()
@@ -114,14 +122,14 @@ function update(month, year) {
   .attr("height", function(d) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].state == d.state) {
-        return height - y(data[i].x1);
+        return height - y(data[i].mean);
       }
     }
   })
   .attr("transform", function(d) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].state == d.state) {
-        return "translate(" + [0, (-this.y.baseVal.value + y(data[i].x1))] + ")"
+        return "translate(" + [0, (-this.y.baseVal.value + y(data[i].mean))] + ")"
       }
     }
   })
