@@ -16,6 +16,7 @@ Pkg.add("JSON")
 Pkg.update()
 ```
 
+I strongly recommend at least 6 GB RAM, if you have only 4 GB you'll need 4 GB on swap to run the script. 
 
 ## Installation
 
