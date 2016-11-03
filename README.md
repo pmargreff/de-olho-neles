@@ -8,10 +8,12 @@ For run the project you need the latest data files from serenata de amor servers
 - [Last Year](https://s3-sa-east-1.amazonaws.com/serenata-de-amor-data/2016-08-08-last-year.xz)
 - [Previous Year](https://s3-sa-east-1.amazonaws.com/serenata-de-amor-data/2016-08-08-previous-years.xz)
 
-You'll need [Julia](http://julialang.org/) language to create the files in the correct format. After download Julia you need get Dataframes package, to do that, inside Julia call:
+You'll need [Julia](http://julialang.org/) language to create the files in the correct format. After download Julia you need get Dataframes and JSON packages, to do that, inside Julia call:
 
 ```
 Pkg.add("DataFrames")
+Pkg.add("JSON")
+Pkg.update()
 ```
 
 
@@ -65,9 +67,3 @@ Open ```localhost:3000``` and be happy.
 ## Contribuiting
 
 If you don't take fire, send your issue, and all will be fine. 
-
-
-## TODO:
-- [ ] Finish radar
-
-- [ ] Deploy on git pages

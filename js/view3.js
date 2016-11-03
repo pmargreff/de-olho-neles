@@ -82,7 +82,7 @@ function createStateSelect(states) {
 
 function createPersonSelect(state) {
   $('#personlist').empty();
-  console.log(state_data);
+
   for (var i = 0; i < state_data.length; i++) {
     if (state_data[i].state == state) {
       $('#personlist')

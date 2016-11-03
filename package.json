@@ -1,7 +1,7 @@
 {
   "name": "serenata-de-amor-visualization",
   "version": "1.0.0",
-  "description": "a visualization to serenata de amor project",
+  "description": "a visualization for serenata de amor project",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,8 +9,7 @@
   "author": "pmargreff, jschneiders",
   "license": "MIT",
   "dependencies": {
-    "angular-ui-router": "^0.3.1",
-    "d3-queue": "~3.0.3"
+    "angular-ui-router": "^0.3.1"
   },
   "devDependencies": {},
   "repository": {

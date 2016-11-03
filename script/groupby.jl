@@ -131,13 +131,13 @@ if length(ARGS) != 0
     df = readtable(finalfile)
     println("File loaded.")
     
-    # println("Group by state ...")
-    # groupbystate(df)
-    # println("Group by state finished.")
+    println("Group by state ...")
+    groupbystate(df)
+    println("Group by state finished.")
     
-    # println("Group by company ...")
-    # groupbycompany(df)
-    # println("Group by company finished.")
+    println("Group by company ...")
+    groupbycompany(df)
+    println("Group by company finished.")
     
     println("Group by person and state ...")
     groupbypersonandstate(df)
