@@ -57,9 +57,8 @@ function groupbypersonandsubquota(df)
   rename!(groupdf, :x1, :value)
   rename!(groupdf, :subquota_description, :axis)
   
-  outputfile = string("data/teste.json")
+  outputfile = string("data/bypersonandsubquota.json")
   writejson(outputfile, groupdf)
-  # writetable(outputfile, groupdf)
   
 end
 
@@ -86,12 +85,21 @@ function writejson(path::String,df::DataFrame)
     for subdf in dfbyperson
       write(f,"[")
       write(f,df2json(subdf))
-      println(df2json(subdf))
       i == size ? write(f,"]") : write(f,"],")
       i += 1
     end
     write(f,"]")
   close(f)
+end
+
+
+function groupbypersonandstate(df)
+  groupdf = by(df, [:state,:congressperson_name], df -> sum(df[:net_value]))
+
+  sort!(groupdf, cols = [order(:state), order(:congressperson_name)])
+  
+  outputfile = string("data/bypersonandstate.csv")
+  writetable(outputfile, groupdf)
 end
 
 function merge_dataframes(files)
@@ -110,7 +118,6 @@ function merge_dataframes(files)
   return outputfile
 end
 
-
 if length(ARGS) != 0
   if ARGS[1] == "merge"
     println("please wait, creating file ...")
@@ -118,7 +125,7 @@ if length(ARGS) != 0
     println("file created")
   elseif ARGS[1] == "create"
     
-    finalfile = string("data/teste.csv")
+    finalfile = string("data/final.csv")
     
     println("Loading file ...")
     df = readtable(finalfile)
@@ -132,9 +139,13 @@ if length(ARGS) != 0
     # groupbycompany(df)
     # println("Group by company finished.")
     
-    println("Group by person ...")
+    println("Group by person and state ...")
+    groupbypersonandstate(df)
+    println("Group by person and state finished.")
+    
+    println("Group by person and subquota ...")
     groupbypersonandsubquota(df)
-    println("Group by person finished.")
+    println("Group by person and subquota finished.")
   else
     println("Params error, check the README file!")
   end

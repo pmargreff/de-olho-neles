@@ -43,7 +43,7 @@ function RadarChart(id, data, options) {
 	var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
 		total = allAxis.length,					//The number of different axes
 		radius = Math.min(cfg.w/2, cfg.h/2), 			//Radius of the outermost circle
-		Format = d3.format(".1f"),			 	//Percentage formatting
+		Format = d3.format(".0f"),			 	//Percentage formatting
 		angleSlice = Math.PI * 2 / total;			//The width in radians of each "slice"
 	
 	//Scale for the radius
@@ -231,7 +231,7 @@ function RadarChart(id, data, options) {
 			tooltip
 				.attr('x', newX)
 				.attr('y', newY)
-				.text(Format(d.value))
+				.text("R$ " + Format(d.value))
 				.transition().duration(200)
 				.style('opacity', 1);
 		})

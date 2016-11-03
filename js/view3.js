@@ -1,8 +1,7 @@
-$(document).ready(function() {
-  $('select').material_select();
-});
 
-var  person_data;
+
+var person_data;
+var state_data;
 ////////////////////////////////////////////////////////////// 
 //////////////////////// Set-Up ////////////////////////////// 
 ////////////////////////////////////////////////////////////// 
@@ -28,18 +27,38 @@ var radarChartOptions = {
 };
 
 //Load the data and Call function to draw the Radar chart
-d3.json("./data/teste.json", function(error, data){
+d3.json("./data/bypersonandsubquota.json", function(error, data){
   person_data = data;
-  RadarChart(".radarChart", data[1], radarChartOptions);
+
+  d3.csv("./data/bypersonandstate.csv", function(error, data){
+    state_data = data;
+    states = (array_unique(data.map(function(d) { return d.state; })));
+    createStateSelect(states);
+  });
+
 });
 
+
+
+function array_unique(arr) {
+  var result = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (result.indexOf(arr[i]) == -1) {
+      result.push(arr[i]);
+    }
+  }
+  return result;
+}
+
+$("#statelist").on('change', function(){
+  var selVal = $("#statelist").val();
+  createPersonSelect(selVal);
+});
 
 $("#personlist").on('change', function(){
   var selVal = $("#personlist").val();
   newData = searchPerson(selVal);
-  console.log(newData);
   RadarChart(".radarChart", newData, radarChartOptions);
-  
 });
 
 function searchPerson(name) {
@@ -49,3 +68,36 @@ function searchPerson(name) {
     }
   }
 }
+
+function createStateSelect(states) {
+  for (var i = 0; i < states.length; i++) {
+    $("#statelist")
+    .append('<option value="'+states[i]+'">'+states[i]+'</option>')
+  }
+  $('select').material_select();
+  
+  var selVal = $("#statelist").val();
+  createPersonSelect(selVal);
+}
+
+function createPersonSelect(state) {
+  $('#personlist').empty();
+  console.log(state_data);
+  for (var i = 0; i < state_data.length; i++) {
+    if (state_data[i].state == state) {
+      $('#personlist')
+      .append('<option value="'+state_data[i].congressperson_name+'">'+state_data[i].congressperson_name+'</option>');
+    }
+  }
+  
+  $('select').material_select();
+
+  var selVal = $("#personlist").val();
+  newData = searchPerson(selVal);
+  RadarChart(".radarChart", newData, radarChartOptions);
+
+}
+
+$(document).ready(function() {
+  $('select').material_select();
+});
