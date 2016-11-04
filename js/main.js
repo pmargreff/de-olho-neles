@@ -11,8 +11,12 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   });
   
   $stateProvider
-    .state('view1', {
+    .state('total', {
       url: "/",
+      templateUrl: "partials/total.html"
+    })  
+    .state('view1', {
+      url: "/view1",
       templateUrl: "partials/view1.html"
     })  
     .state('view2', {
