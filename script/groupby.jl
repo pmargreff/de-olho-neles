@@ -98,7 +98,6 @@ function writejson(path::String,df::DataFrame)
   close(f)
 end
 
-
 function groupbypersonandstate(df)
   groupdf = by(df, [:state,:congressperson_name], df -> sum(df[:net_value]))
 
@@ -117,6 +116,59 @@ function grouptotalbytime(df)
   
   outputfile = string("data/totalbytime.csv")
   writetable(outputfile, groupdf)
+end
+
+function findstringarray(ary, s)
+   res = Any[]
+   for e in ary
+     if contains(string(e), string(s)) && length(strip(string(e))) == length(strip(string(s)))  
+       push!(res, true)
+     else
+       push!(res, false)
+     end
+   end
+   return res
+end
+
+function groupbyparty(df)
+  
+  groupdf = by(df, [:party], df -> sum(df[:net_value]))
+  
+  arrparty = groupdf[:party]
+   
+  
+  groupdf = by(df, [:party,:year, :month, :congressperson_name], df -> sum(df[:net_value]))
+  groupdf1 = by(groupdf, [:party,:year, :month], groupdf -> sum(groupdf[:x1]))
+  groupdf2 = by(groupdf, [:party,:year, :month], nrow)
+  
+  groupdf1[:mean] = map((x,y) -> x/y, groupdf1[:x1], groupdf2[:x1])
+  groupdf1[:date] = map((x,y) -> string(x,"-",y), groupdf1[:year], groupdf1[:month])
+  
+  groupbydate = groupby(groupdf1, [:date])
+  
+  
+  finaldf = DataFrame()
+  
+  first = true 
+  for subdf in groupbydate
+    tempdf = DataFrame()
+    tempdf[:date] = subdf[1,:date]
+    for party in arrparty 
+      ret = subdf[find(findstringarray(subdf[:,:party], party)), :]
+      size(ret,1) == 1 ? tempdf[Symbol(party)] = ret[1,:mean] : tempdf[Symbol(party)] = 0.0
+    end
+    
+    if first == true
+      finaldf = tempdf
+      first = false
+    else
+      append!(finaldf, tempdf)
+    end
+  end
+
+  outputfile = string("data/byparty.csv")
+  writetable(outputfile, finaldf)
+
 end
 
 function merge_dataframes(files)
@@ -142,31 +194,35 @@ if length(ARGS) != 0
     println("file created")
   elseif ARGS[1] == "create"
     
-    finalfile = string("data/final.csv")
+    finalfile = string("data/2016-08-08-last-year.csv")
     
     println("Loading file ...")
     df = readtable(finalfile)
     println("File loaded.")
     
     println("Group by date ...")
-    grouptotalbytime(df)
+    groupbyparty(df)
     println("Group by date finished")
     
-    println("Group by state ...")
-    groupbystate(df)
-    println("Group by state finished.")
-    
-    println("Group by company ...")
-    groupbycompany(df)
-    println("Group by company finished.")
-    
-    println("Group by person and state ...")
-    groupbypersonandstate(df)
-    println("Group by person and state finished.")
-    
-    println("Group by person and subquota ...")
-    groupbypersonandsubquota(df)
-    println("Group by person and subquota finished.")
+    # println("Group by date ...")
+    # grouptotalbytime(df)
+    # println("Group by date finished")
+    # 
+    # println("Group by state ...")
+    # groupbystate(df)
+    # println("Group by state finished.")
+    # 
+    # println("Group by company ...")
+    # groupbycompany(df)
+    # println("Group by company finished.")
+    # 
+    # println("Group by person and state ...")
+    # groupbypersonandstate(df)
+    # println("Group by person and state finished.")
+    # 
+    # println("Group by person and subquota ...")
+    # groupbypersonandsubquota(df)
+    # println("Group by person and subquota finished.")
   else
     println("Params error, check the README file!")
   end
