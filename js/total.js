@@ -20,7 +20,6 @@ var line = d3.line()
 
 d3.csv("./data/totalbytime.csv", function(d) {
  d.date = parseTime(d.date);
- console.log(parseTime("2015-8"));
  d.x1 = + d.x1;
  return d;
 }, function(error, data) {

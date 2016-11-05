@@ -18,7 +18,8 @@ angular.module('serenata-de-amor-visualization').controller('StateController', f
   init();
 });
 
-var globalData = [];
+
+var stateData = [];
 
 function init() {
   var svg = d3.select("svg"),
@@ -33,7 +34,7 @@ function init() {
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
   
   d3.csv("./data/bystate.csv", function(d) {
-    globalData.push(d);
+    stateData.push(d);
     if (d.month == 1 && d.year == 2016) {    
       d.mean = +d.mean;
       return d;
@@ -41,7 +42,11 @@ function init() {
   }, function(error, data) {
     if (error) throw error;
     x.domain(data.map(function(d) { return d.state; }));
-    y.domain([0, Math.max.apply(Math, globalData.map(function(d) { return d.mean; }))]);
+    y.domain([0, Math.max.apply(Math, stateData.map(function(d) { 
+      console.log(d);
+      return d.mean; 
+    }))]);
+      
     
     g.append("g")
     .attr("class", "axis axis--x")
@@ -94,9 +99,9 @@ function update(month, year) {
   
   data = []
   
-  for (var i = 0; i < globalData.length; i++) {
-    if (globalData[i].month == month && globalData[i].year == year) {
-      data.push(globalData[i]);
+  for (var i = 0; i < stateData.length; i++) {
+    if (stateData[i].month == month && stateData[i].year == year) {
+      data.push(stateData[i]);
     }
   }
   
@@ -112,7 +117,7 @@ function update(month, year) {
   var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
   y = d3.scaleLinear().rangeRound([height, 0]);
   
-  y.domain([0, Math.max.apply(Math, globalData.map(function(d) { return d.mean; }))]);
+  y.domain([0, Math.max.apply(Math, stateData.map(function(d) { return d.mean; }))]);
   // THIS IS THE ACTUAL WORK!
   
   var bars = svg.selectAll(".bar")
