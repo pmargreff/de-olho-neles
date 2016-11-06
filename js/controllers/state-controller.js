@@ -1,4 +1,5 @@
 angular.module('serenata-de-amor-visualization').controller('StateController', function ($scope, $http) {
+
   start_year = 2016;
   start_month = 1;
   
@@ -26,7 +27,7 @@ function init() {
   margin = {top: 20, right: 20, bottom: 30, left: 40},
   width = +svg.attr("width") - margin.left - margin.right,
   height = +svg.attr("height") - margin.top - margin.bottom;
-  
+
   var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
   y = d3.scaleLinear().rangeRound([height, 0]);
   
@@ -43,7 +44,6 @@ function init() {
     if (error) throw error;
     x.domain(data.map(function(d) { return d.state; }));
     y.domain([0, Math.max.apply(Math, stateData.map(function(d) { 
-      console.log(d);
       return d.mean; 
     }))]);
       
@@ -96,7 +96,7 @@ function tooltipText(d) {
 }
 
 function update(month, year) {
-  
+
   data = []
   
   for (var i = 0; i < stateData.length; i++) {

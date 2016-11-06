@@ -132,42 +132,28 @@ end
 
 function groupbyparty(df)
   
-  groupdf = by(df, [:party], df -> sum(df[:net_value]))
+  groupdf = by(df, [:year,:month, :party, :congressperson_name], df -> sum(df[:net_value]))
+  groupdf = by(groupdf, [:year,:month, :party], groupdf -> mean(groupdf[:x1]))
   
-  arrparty = groupdf[:party]
-   
+  groupfaults = groupby(groupdf, [:year, :month])
   
-  groupdf = by(df, [:party,:year, :month, :congressperson_name], df -> sum(df[:net_value]))
-  groupdf1 = by(groupdf, [:party,:year, :month], groupdf -> sum(groupdf[:x1]))
-  groupdf2 = by(groupdf, [:party,:year, :month], nrow)
-  
-  groupdf1[:mean] = map((x,y) -> x/y, groupdf1[:x1], groupdf2[:x1])
-  groupdf1[:date] = map((x,y) -> string(x,"-",y), groupdf1[:year], groupdf1[:month])
-  
-  groupbydate = groupby(groupdf1, [:date])
-  
-  
-  finaldf = DataFrame()
-  
-  first = true 
-  for subdf in groupbydate
-    tempdf = DataFrame()
-    tempdf[:date] = subdf[1,:date]
-    for party in arrparty 
-      ret = subdf[find(findstringarray(subdf[:,:party], party)), :]
-      size(ret,1) == 1 ? tempdf[Symbol(party)] = ret[1,:mean] : tempdf[Symbol(party)] = 0.0
-    end
+  dfparties = by(df, [:party], df -> sum(df[:net_value]))
+  outputfile = string("data/parties.csv")
+
+  arrparty = dfparties[:party]
     
-    if first == true
-      finaldf = tempdf
-      first = false
-    else
-      append!(finaldf, tempdf)
+  outputfile = string("data/byparty.csv")
+  for subdf in groupfaults
+    for party in arrparty
+      if size(subdf[find(findstringarray(subdf[:,:party], party)), :],1) == 0
+        push!(groupdf, @data([subdf[1, :year], subdf[1 ,:month], string(party), 0.0]))
+      end
     end
   end
 
-  outputfile = string("data/byparty.csv")
-  writetable(outputfile, finaldf)
+  sort!(groupdf, cols = [order(:year), order(:month)])
+  
+  writetable(outputfile, groupdf)
 
 end
 
@@ -194,11 +180,12 @@ if length(ARGS) != 0
     println("file created")
   elseif ARGS[1] == "create"
     
-    finalfile = string("data/2016-08-08-last-year.csv")
+    finalfile = string("data/final.csv")
     
     println("Loading file ...")
     df = readtable(finalfile)
     println("File loaded.")
+    
     
     println("Group by date ...")
     groupbyparty(df)
