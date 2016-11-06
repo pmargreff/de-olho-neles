@@ -51,14 +51,14 @@ d3.csv("/data/bycompany.csv", function(data) {
       
       tooltip: {
         formatter: function () {
-          return '<b> Company: <b>' + data[this.point.index].supplier + 
+          return '<b> EMPRESA: <b>' + data[this.point.index].supplier + 
           '</b> <br><b>CNPJ/CPF: <b>' + data[this.point.index].cnpj_cpf + 
-          '</b> <br><b>Value: R$ <b>' + this.point.value.toFixed(0) + 
-          '</b> <br><b>Position: <b> ' + (this.series.data.length - this.point.index) + '</b>º<br>';
+          '</b> <br><b>Valor: R$ <b>' + this.point.value.toFixed(0) + 
+          '</b> <br><b>Posição (Anual): <b> ' + (this.series.data.length - this.point.index) + '</b>º<br>';
         }
       },
       series: [{
-        name: 'Value per company',
+        name: 'Valor por empresa',
         borderWidth: 1,
         borderColor: '#FFFFFF',
         data: normalizedData,
@@ -100,7 +100,7 @@ $("#list").on('change', function(){
   
   newData = createData(globalData, selVal);
   globalOptions.series = [{
-    name: 'Value per company',
+    name: 'Valor por empresa',
     borderWidth: 1,
     borderColor: '#FFFFFF',
     data: newData,

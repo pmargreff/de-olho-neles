@@ -42,7 +42,7 @@ d3.csv("./data/totalbytime.csv", function(d) {
      .attr("y", 6)
      .attr("dy", "0.71em")
      .style("text-anchor", "end")
-     .text("Value (R$)");
+     .text("Valor - R$");
 
  g.append("path")
      .datum(data)

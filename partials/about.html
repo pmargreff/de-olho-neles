@@ -1,39 +1,55 @@
-<h4>About</h4>
+<h4>Informações</h4>
 <p class="flow-text">
-  The current milestone is to create the means for this kind of automation with the Quota for Exercising Parliamentary Activity (CEAP), from the Brazilian Chamber of Deputies. This job includes the development of APIs, data cleaning and analyses, conception and validation of scientific hyphotheses, confirmation of illicit acts via investigation and reports - to the population and to legal authorities.
+  A Cota para Exercício da Atividade Parlamentar (CEAP) é um valor usado para ressarcir deputados com quaisqueres despesas feitas em razão do trabalho em situações onde não cabem abrir uma licitação.
 </p>
 <p class="flow-text">
-  Quota for Exercising Parliamentary Activity (CEAP) is something like the corporative credit card from the Brazilian Chamber of Deputies, the main reason to show this data is: if you're Brazilian,you pay these expenses.
+  A grosso modo, podemos enxergá-la como o cartão de crédito corporativo dos deputados, com um pequeno detalhe, você paga a conta. A cota tem valores variáveis por estado, para entender melhor o que você está visualizando acesse o relatório falando mais sobre isso <a href="http://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar">aqui</a>.
 </p>
-<h4>Explanation</h4>
-<h5>Monthly value</h5>
 <p class="flow-text">
-  The total value spent by month. 
+  Este projeto é uma vertente e usa dados fornecidos pelo projeto serenata de amor, que tem como objetivo usar Inteligência Artifícial para detectar automáticamente gastos suspeitos feitos com essa verba.
 </p>
-<h5>Average per state</h5>
+<h4>Resumo</h4>
+<h5>Total Mensal</h5>
 <p class="flow-text">
-  The mean spent by state for each month. 
+  O valor total gasto durante determinado mês. 
 </p>
-<h5>Group by company</h5>
+<h5>Média por estado</h5>
 <p class="flow-text">
-  The 100 top won companies and total values for each year.
+  O total (porcentagem) levando em consideração o valor máximo que cada estado pode usar. Além disso também é possível visualizar o valor máximo por estado, o valor médio gasto por estado, o total gasto e o número de deputados. 
 </p>
-<h5>Group by person</h5>
+<h5>Empresas com maior recebimento</h5>
 <p class="flow-text">
-  The amount spent by person for all public life, if the people have more than one term of office the total value is showed. 
+  Uma tabela com as 100 empresas que mais receberam durante o ano, assim como seu CNPJ/CPF e o valor total.
 </p>
-<h5>Average per party</h5>
+<h5>Valor por área</h5>
 <p class="flow-text">
-  The mean to each party.
+  O valor que cada deputado gastou por área (de um total de 18 áreas) durante todo tempo que ocupou o cargo de deputado (se houve mais de um mandato é mostrado o somatório de todos mandatos).   
+</p>
+<h5>Média por partido</h5>
+<p class="flow-text">
+  Valor médio mensal dos gastos de cada partidos.
+</p>
+<p class="flow-text">
+  <b><h6>Funcionalidades:</h6></b>
+  <ul> 
+    <li>Clique: Selecionar/Deselecionar estados</li>
+    <li>Clique duplo: Deselecionar todos menos o escolhido</li>
+  </ul>
 </p>
 <p class="flow-text">
   <h4>Links:</h4>
   <ul>
-    <li><u>
-      <a href="https://serenata.datasciencebr.com">Serenata de amor</a></li>
-      <li><a href="https://github.com/datasciencebr/serenata-de-amor">Project on Github</a></li>
-      <li><a href="https://github.com/pmargreff/serenata-de-amor-visualization">Help with data Visualization</a>
-      </u>
-    </li>
+    <u>
+      <li><a href="https://github.com/pmargreff/serenata-de-amor-visualization">CEAP Visualization no Github</a></li>
+      <li><a href="https://serenata.datasciencebr.com">Serenata de amor</a></li>
+      <li><a href="https://github.com/datasciencebr/serenata-de-amor">Serenata de amor no Github</a></li>
+    </u>
   </ul>
+</p>
+
+<h4>Feito com <img src="./images/heart.png" style="width:28px; height: 28px;"> e com ajuda de:</h4>
+<p class="row">
+  <a href="https://serenata.datasciencebr.com"><img src="./images/logo_p.png" style="width:112px; height: 67px; margin-left:30px"></a>
+  <a href="https://d3js.org/"><img src="./images/d3.png" style="width:90px; height: 67px; margin-left:30px"></a>
+  <a href="http://julialang.org/"><img src="./images/julia.png" style="width:112px; height: 67px; margin-left:30px"></a>
 </p>

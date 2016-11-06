@@ -89,11 +89,10 @@ function init() {
 }
 
 function tooltipText(d) {
-      return 'Mean value: R$ ' + parseFloat(d.mean).toFixed(0) + 
-      ' Max value: R$ ' + d.mean / d.percent + 
-      ' Total value: R$ ' + parseFloat(d.x1).toFixed(0) + 
-      ' Number of persons: '+ d.people +
-      ' State: ' + d.state;
+      return 'Média - R$: ' + parseFloat(d.mean).toFixed(0) + 
+      ' Máximo - R$: ' + (d.mean / d.percent).toFixed(0) + 
+      ' Total - R$: ' + parseFloat(d.x1).toFixed(0) + 
+      ' Deputados ('+ d.state+"): "+ d.people;
 }
 
 function update(month, year) {
