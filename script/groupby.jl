@@ -1,4 +1,3 @@
-e 
 using JSON 
 using DataFrames 
 
@@ -10,8 +9,20 @@ function groupbystate(df)
   groupbyvalue[:people] = map((x) -> x, groupbypeople[:x1])
   groupbyvalue[:mean] = map((x,y) -> x/y, groupbyvalue[:x1], groupbyvalue[:people])
   
-  outputfile = string("data/bystate.csv")
+  maxvaluefile = string("data/maxvaluebystate.csv")
+  maxvaluedf = readtable(maxvaluefile)
 
+  groupbyvalue[:percent] = map((x) -> x, groupbyvalue[:mean])
+  
+  for rowdata in eachrow(groupbyvalue)
+    for rowvalue in eachrow(maxvaluedf)
+      if string(rowdata[:state]) == string(rowvalue[:state])
+        rowdata[:percent] = rowdata[:mean] / rowvalue[:max_value]  
+      end
+    end
+  end
+  
+  outputfile = string("data/bystate.csv")
   writetable(outputfile, groupbyvalue)
   
 end
@@ -186,27 +197,26 @@ if length(ARGS) != 0
     df = readtable(finalfile)
     println("File loaded.")
     
-    
-    println("Group by date ...")
-    groupbyparty(df)
-    println("Group by date finished")
-    
+    # println("Group by date ...")
+    # groupbyparty(df)
+    # println("Group by date finished")
+    # 
     # println("Group by date ...")
     # grouptotalbytime(df)
     # println("Group by date finished")
-    # 
-    # println("Group by state ...")
-    # groupbystate(df)
-    # println("Group by state finished.")
-    # 
+    
+    println("Group by state ...")
+    groupbystate(df)
+    println("Group by state finished.")
+    
     # println("Group by company ...")
     # groupbycompany(df)
     # println("Group by company finished.")
-    # 
+    
     # println("Group by person and state ...")
     # groupbypersonandstate(df)
     # println("Group by person and state finished.")
-    # 
+    
     # println("Group by person and subquota ...")
     # groupbypersonandsubquota(df)
     # println("Group by person and subquota finished.")

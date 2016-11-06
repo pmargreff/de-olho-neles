@@ -37,14 +37,14 @@ function init() {
   d3.csv("./data/bystate.csv", function(d) {
     stateData.push(d);
     if (d.month == 1 && d.year == 2016) {    
-      d.mean = +d.mean;
+      d.percent = +d.percent;
       return d;
     }
   }, function(error, data) {
     if (error) throw error;
     x.domain(data.map(function(d) { return d.state; }));
     y.domain([0, Math.max.apply(Math, stateData.map(function(d) { 
-      return d.mean; 
+      return d.percent; 
     }))]);
       
     
@@ -55,7 +55,7 @@ function init() {
     
     g.append("g")
     .attr("class", "axis axis--y")
-    .call(d3.axisLeft(y).ticks(4).tickFormat(d3.formatPrefix(".1", 1e4)))
+    .call(d3.axisLeft(y).ticks(10, "%"))
     .append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 6)
@@ -69,9 +69,9 @@ function init() {
     .enter().append("rect")
     .attr("class", "bar")
     .attr("x", function(d) { return x(d.state); })
-    .attr("y", function(d) { return y(d.mean); })
+    .attr("y", function(d) { return y(d.percent); })
     .attr("width", x.bandwidth())
-    .attr("height", function(d) { return height - y(d.mean); })
+    .attr("height", function(d) { return height - y(d.percent); })
     .on('mouseover', function (d) {
       coordinates = d3.mouse(this);
       d3.select(".relative")
@@ -90,6 +90,7 @@ function init() {
 
 function tooltipText(d) {
       return 'Mean value: R$ ' + parseFloat(d.mean).toFixed(0) + 
+      ' Max value: R$ ' + d.mean / d.percent + 
       ' Total value: R$ ' + parseFloat(d.x1).toFixed(0) + 
       ' Number of persons: '+ d.people +
       ' State: ' + d.state;
@@ -117,7 +118,7 @@ function update(month, year) {
   var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
   y = d3.scaleLinear().rangeRound([height, 0]);
   
-  y.domain([0, Math.max.apply(Math, stateData.map(function(d) { return d.mean; }))]);
+  y.domain([0, Math.max.apply(Math, stateData.map(function(d) { return d.percent; }))]);
   // THIS IS THE ACTUAL WORK!
   
   var bars = svg.selectAll(".bar")
@@ -127,14 +128,14 @@ function update(month, year) {
   .attr("height", function(d) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].state == d.state) {
-        return height - y(data[i].mean);
+        return height - y(data[i].percent);
       }
     }
   })
   .attr("transform", function(d) {
     for (var i = 0; i < data.length; i++) {
       if (data[i].state == d.state) {
-        return "translate(" + [0, (-this.y.baseVal.value + y(data[i].mean))] + ")"
+        return "translate(" + [0, (-this.y.baseVal.value + y(data[i].percent))] + ")"
       }
     }
   })
