@@ -1,5 +1,5 @@
 # Do olho neles
-[De olho neles](http://deolhoneles.com) is a simple dashboard to parse data used by serenata de amor projects into something visual.  
+[De olho neles](http://www.deolhoneles.com) is a simple dashboard to parse data used by serenata de amor projects into something visual.  
 
 ## Pre-requisites
 
