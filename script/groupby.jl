@@ -150,6 +150,7 @@ function groupbyparty(df)
   
   dfparties = by(df, [:party], df -> sum(df[:net_value]))
   outputfile = string("data/parties.csv")
+  writetable(outputfile, dfparties)
 
   arrparty = dfparties[:party]
     
@@ -197,9 +198,9 @@ if length(ARGS) != 0
     df = readtable(finalfile)
     println("File loaded.")
     
-     println("Group by date ...")
+     println("Group by party ...")
      groupbyparty(df)
-     println("Group by date finished")
+     println("Group by party finished")
      
      println("Group by date ...")
      grouptotalbytime(df)
