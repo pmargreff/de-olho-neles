@@ -12,27 +12,27 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   
   $stateProvider
     .state('total', {
-      url: "/total",
+      url: "/",
       templateUrl: "partials/total.html"
     })  
-    .state('view1', {
-      url: "/view1",
-      templateUrl: "partials/view1.html"
+    .state('bystate', {
+      url: "/estados",
+      templateUrl: "partials/bystate.html"
     })  
-    .state('view2', {
-      url: "/view2",
-      templateUrl: "partials/view2.html"
+    .state('bycompany', {
+      url: "/empresas",
+      templateUrl: "partials/bycompany.html"
     })  
-    .state('view3', {
-      url: "/view3",
-      templateUrl: "partials/view3.html"
+    .state('bycategory', {
+      url: "/categoria",
+      templateUrl: "partials/bycategory.html"
     })  
     .state('party', {
       url: "/party",
-      templateUrl: "partials/party.html"
+      templateUrl: "partials/byparty.html"
     })  
     .state('about', {
-      url: "/",
+      url: "/about",
       templateUrl: "partials/about.html"
     })  
 });
