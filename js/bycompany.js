@@ -36,16 +36,16 @@ d3.csv("/data/bycompany.csv", function(data) {
       
       colorAxis: {
         min: 0,
-        minColor: '#e3f2fd',
-        maxColor: '#2196f3'
+        minColor: '#d6fafe',
+        maxColor: '#00a0b0'
       },
-      
+
       legend: {
         align: 'right',
         layout: 'vertical',
         margin: 0,
         verticalAlign: 'top',
-        y: 25,
+        y: 30,
         symbolHeight: 280
       },
       
@@ -60,11 +60,11 @@ d3.csv("/data/bycompany.csv", function(data) {
       series: [{
         name: 'Valor por empresa',
         borderWidth: 1,
-        borderColor: '#FFFFFF',
+        borderColor: '#d0e0e2',
         data: normalizedData,
         dataLabels: {
           enabled: true,
-          color: '#000000'
+          color: '#06515a'
         }
       }]
       

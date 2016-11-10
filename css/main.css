@@ -9,7 +9,16 @@ header, main, footer {
 }
 
 .nav-color {
-    background-color: #9d5499 !important;
+    background-color: #b7457e !important;
+}
+
+a{
+	color: #c62174;
+}
+
+ul li{
+	font-size: 18px;
+	padding: 5px 0px;
 }
 
 .bar {

@@ -197,29 +197,29 @@ if length(ARGS) != 0
     df = readtable(finalfile)
     println("File loaded.")
     
-    # println("Group by date ...")
-    # groupbyparty(df)
-    # println("Group by date finished")
-    # 
-    # println("Group by date ...")
-    # grouptotalbytime(df)
-    # println("Group by date finished")
+     println("Group by date ...")
+     groupbyparty(df)
+     println("Group by date finished")
+     
+     println("Group by date ...")
+     grouptotalbytime(df)
+     println("Group by date finished")
     
     println("Group by state ...")
     groupbystate(df)
     println("Group by state finished.")
     
-    # println("Group by company ...")
-    # groupbycompany(df)
-    # println("Group by company finished.")
+     println("Group by company ...")
+     groupbycompany(df)
+     println("Group by company finished.")
     
-    # println("Group by person and state ...")
-    # groupbypersonandstate(df)
-    # println("Group by person and state finished.")
+     println("Group by person and state ...")
+     groupbypersonandstate(df)
+     println("Group by person and state finished.")
     
-    # println("Group by person and subquota ...")
-    # groupbypersonandsubquota(df)
-    # println("Group by person and subquota finished.")
+     println("Group by person and subquota ...")
+     groupbypersonandsubquota(df)
+     println("Group by person and subquota finished.")
   else
     println("Params error, check the README file!")
   end
