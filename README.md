@@ -1,4 +1,4 @@
-# serenata de amor visualization
+# Do olho neles
 This is a simple dashboard to parse data used by serenata de amor projects into something visual.  
 
 ## Pre-requisites

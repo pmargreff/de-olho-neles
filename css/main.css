@@ -8,6 +8,10 @@ header, main, footer {
   }
 }
 
+.nav-color {
+    background-color: #9d5499 !important;
+}
+
 .bar {
   fill: steelblue;
 }
