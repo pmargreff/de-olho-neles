@@ -9,9 +9,11 @@ var jsFiles = 'js/*.js',
 
 gulp.task('min', function() {  
     return gulp.src(jsFiles)
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest(jsDest))
-        .pipe(rename('main.min.js'))
+        .pipe(rename(function(path){
+        	console.log(path);
+    		path.basename += ".min";
+    		path.extname = ".js"
+        }))
         .pipe(uglify())
         .pipe(gulp.dest(jsDest));
 });
