@@ -36,8 +36,8 @@ d3.csv("/data/bycompany.csv", function(data) {
       
       colorAxis: {
         min: 0,
-        minColor: '#ffcdd2',
-        maxColor: '#b71c1c'
+        minColor: '#e3f2fd',
+        maxColor: '#2196f3'
       },
       
       legend: {
