@@ -12,7 +12,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   
   $stateProvider
     .state('total', {
-      url: "/",
+      url: "/total",
       templateUrl: "partials/total.html"
     })  
     .state('bystate', {
@@ -32,7 +32,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/byparty.html"
     })  
     .state('about', {
-      url: "/about",
+      url: "/",
       templateUrl: "partials/about.html"
     })  
 });
