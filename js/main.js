@@ -28,7 +28,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       templateUrl: "partials/bycategory.html"
     })  
     .state('party', {
-      url: "/party",
+      url: "/partido",
       templateUrl: "partials/byparty.html"
     })  
     .state('about', {
