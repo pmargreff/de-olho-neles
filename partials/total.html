@@ -6,12 +6,29 @@
 <h3>Total Mensal</h3>
 
 <svg width="960" height="500"></svg>
-<h5>Total Mensal</h5>
-<p class="flow-text">
-  O valor total gasto pelos deputados em cada mês. 
-</p>
-<h6>Cálculo: Somatório do valor gasto por cada deputado em determinado mês</h6>
-<hr>
-<h6>* Última data da atualização das informações por parte do governo: 08/08/2016</h6>
+<a class="waves-effect waves-light btn lime accent-3 black-text" href="#modal1"><i class="material-icons left">live_help</i>Entenda</a>
 
 <script type="text/javascript" src="./js/min/total.min.js"></script>
+
+<!-- Modal Trigger -->
+  
+<script t ype="text/javascript">
+$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Total Mensal</h4>
+    <p class="flow-text">
+      O valor total gasto pelos deputados em cada mês. 
+    </p>
+    <h6>Cálculo: Somatório do valor gasto por cada deputado em determinado mês</h6>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-close waves-effect waves-green btn-flat">Voltar</a>
+  </div>
+</div>
