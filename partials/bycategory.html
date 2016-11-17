@@ -18,6 +18,11 @@
       </div>
       
     </div>
+    <div class="col s6">
+      <p class="flow-text">
+        Total: R$ <strong id="totalspentbydeputy"></strong>
+      </p>
+    </div>
     <!-- Google fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
@@ -30,14 +35,14 @@
     <div class="radarChart"></div>
   </div>
   <a class="waves-effect waves-light btn lime accent-3 black-text" href="#modal4"><i class="material-icons left">live_help</i>Entenda</a>
-
+  
 </div>
 
-<script type="text/javascript" src="./js/min/bycategory.min.js"></script>
+<script type="text/javascript" src="./js/bycategory.js"></script>
 
 <!-- Modal Trigger -->
 <script t ype="text/javascript">
-$(document).ready(function(){
+  $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
   });
