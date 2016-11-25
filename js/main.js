@@ -35,4 +35,8 @@ myApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: "/about",
       templateUrl: "partials/about.html"
     })  
+    .state('home', {
+      url: "/home",
+      templateUrl: "partials/home.html"
+    })  
 });
