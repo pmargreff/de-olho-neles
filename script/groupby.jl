@@ -150,6 +150,7 @@ function groupbyparty(df)
   
   dfparties = by(df, [:party], df -> sum(df[:net_value]))
   outputfile = string("data/parties.csv")
+  writetable(outputfile, dfparties)
 
   arrparty = dfparties[:party]
     
@@ -178,12 +179,59 @@ function merge_dataframes(files)
     end
   end
   
+  println("Translating categories ...")
+  newdf = translate(newdf)
+  println("Categories translated")
+  
   outputfile = string("data/final.csv")
   writetable(outputfile, newdf)
   
   return outputfile
 end
 
+function translate(df)
+  for row in eachrow(df)
+    if row[:subquota_description] == "Publication subscriptions"
+      row[:subquota_description] = "ASSINATURA DE PUBLICAÇÕES"
+    elseif row[:subquota_description] == "Fuels and lubricants"
+      row[:subquota_description] = "COMBUSTÍVEIS E LUBRIFICANTES"
+    elseif row[:subquota_description] == "Consultancy, research and technical work"
+      row[:subquota_description] = "CONSULTORIAS, PESQUISAS E TRABALHOS TÉCNICOS"
+    elseif row[:subquota_description] == "Publicity of parliamentary activity"
+      row[:subquota_description] = "DIVULGAÇÃO DA ATIVIDADE PARLAMENTAR"
+    elseif row[:subquota_description] == "Flight ticket issue"
+      row[:subquota_description] = "EMISSÃO BILHETE AÉREO"
+    elseif row[:subquota_description] == "Congressperson meal"
+      row[:subquota_description] = "ALIMENTAÇÃO DO PARLAMENTAR"
+    elseif row[:subquota_description] == "Lodging, except for congressperson from Distrito Federal"
+      row[:subquota_description] = "HOSPEDAGEM"
+    elseif row[:subquota_description] == "Aircraft renting or charter of aircraft"
+      row[:subquota_description] = "LOCAÇÃO OU FRETAMENTO DE AERONAVES"
+    elseif row[:subquota_description] == "Watercraft renting or charter"
+      row[:subquota_description] = "LOCAÇÃO OU FRETAMENTO DE EMBARCAÇÕES"
+    elseif row[:subquota_description] == "Automotive vehicle renting or charter"
+      row[:subquota_description] = "LOCAÇÃO OU FRETAMENTO DE VEÍCULOS AUTOMOTORES"
+    elseif row[:subquota_description] == "Maintenance of office supporting parliamentary activity"
+      row[:subquota_description] = "MANUTENÇÃO DE ESCRITÓRIO"
+    elseif row[:subquota_description] == "Participation in course, talk or similar event"
+      row[:subquota_description] = "CURSO, PALESTRA OU EVENTO SIMILAR"
+    elseif row[:subquota_description] == "Flight tickets"
+      row[:subquota_description] = "PASSAGENS AÉREAS"
+    elseif row[:subquota_description] == "Terrestrial, maritime and fluvial tickets"
+      row[:subquota_description] = "PASSAGENS TERRESTRES, MARÍTIMAS OU FLUVIAIS"
+    elseif row[:subquota_description] == "Security service provided by specialized company"
+      row[:subquota_description] = "SEGURANÇA PRESTADO POR EMPRESA ESPECIALIZADA"
+    elseif row[:subquota_description] == "Taxi, toll and parking"
+      row[:subquota_description] = "TÁXI, PEDÁGIO E ESTACIONAMENTO"
+    elseif row[:subquota_description] == "Postal services"
+      row[:subquota_description] = "SERVIÇOS POSTAIS"
+    elseif row[:subquota_description] == "Telecommunication"
+      row[:subquota_description] = "TELEFONIA"
+    end
+  end
+  
+  return df
+end
 if length(ARGS) != 0
   if ARGS[1] == "merge"
     println("please wait, creating file ...")
@@ -197,29 +245,29 @@ if length(ARGS) != 0
     df = readtable(finalfile)
     println("File loaded.")
     
-     println("Group by date ...")
-     groupbyparty(df)
-     println("Group by date finished")
-     
-     println("Group by date ...")
-     grouptotalbytime(df)
-     println("Group by date finished")
+    println("Group by party ...")
+    groupbyparty(df)
+    println("Group by party finished")
+    
+    println("Group by date ...")
+    grouptotalbytime(df)
+    println("Group by date finished")
     
     println("Group by state ...")
     groupbystate(df)
     println("Group by state finished.")
     
-     println("Group by company ...")
-     groupbycompany(df)
-     println("Group by company finished.")
+    println("Group by company ...")
+    groupbycompany(df)
+    println("Group by company finished.")
     
-     println("Group by person and state ...")
-     groupbypersonandstate(df)
-     println("Group by person and state finished.")
+    println("Group by person and state ...")
+    groupbypersonandstate(df)
+    println("Group by person and state finished.")
     
-     println("Group by person and subquota ...")
-     groupbypersonandsubquota(df)
-     println("Group by person and subquota finished.")
+    println("Group by person and subquota ...")
+    groupbypersonandsubquota(df)
+    println("Group by person and subquota finished.")
   else
     println("Params error, check the README file!")
   end

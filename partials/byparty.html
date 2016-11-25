@@ -8,3 +8,35 @@
 
 <svg id="party-svg" width="960" height="600"></svg>
 <script type="text/javascript" src="js/min/byparty.min.js"></script>
+<a class="waves-effect waves-light btn lime accent-3 black-text" href="#modal3"><i class="material-icons left">live_help</i>Entenda</a>
+
+<!-- Modal Structure -->
+
+<div id="modal3" class="modal">
+  <div class="modal-content">
+    <h4>Média por partido</h4>
+    <p class="flow-text">
+      Valor médio mensal dos gastos de cada partidos.
+    </p>
+    <p class="flow-text">
+      <b><h6>Funcionalidades:</h6></b>
+      <ul> 
+        <li>Clique: Selecionar/Deselecionar estados</li>
+        <li>Clique duplo: Deselecionar todos menos o escolhido</li>
+      </ul>
+    </p>
+    <h6>Cálculo: Valor total gasto pelo partido no mês / número de deputados do partido no mês</h6>
+    
+  </div>
+  <div class="modal-footer">
+    <a class="modal-close waves-effect waves-green btn-flat">Voltar</a>
+  </div>
+</div>
+
+<!-- Modal Trigger -->
+<script t ype="text/javascript">
+  $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>

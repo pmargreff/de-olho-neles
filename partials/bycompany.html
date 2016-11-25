@@ -1,25 +1,50 @@
 <div >
   
-<h3>Empresas com maior recebimento</h3>
-<div class="row">
-  <div class="col s6">
-    <div class="input-field col s12">
-      <select id="list">
-        <option value="2009">2009</option>
-        <option value="2010">2010</option>
-        <option value="2011">2011</option>
-        <option value="2012">2012</option>
-        <option value="2013">2013</option>
-        <option value="2014">2014</option>
-        <option value="2015">2015</option>
-        <option value="2016" selected>2016</option>
-      </select>
-      <label>Ano:</label>
+  <h3>Empresas com maior recebimento</h3>
+  <div class="row">
+    <div class="col s6">
+      <div class="input-field col s12">
+        <select id="list">
+          <option value="2009">2009</option>
+          <option value="2010">2010</option>
+          <option value="2011">2011</option>
+          <option value="2012">2012</option>
+          <option value="2013">2013</option>
+          <option value="2014">2014</option>
+          <option value="2015">2015</option>
+          <option value="2016" selected>2016</option>
+        </select>
+        <label>Ano:</label>
+      </div>
+      
     </div>
-    
   </div>
+  
+  <div id="container" style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto;"></div>
+  
+  <a class="waves-effect waves-light btn lime accent-3 black-text" href="#modal5"><i class="material-icons left">live_help</i>Entenda</a>
+  
+  <script type="text/javascript" src="./js/min/bycompany.min.js"></script>
 </div>
 
-<div id="container" style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto;"></div>
-<script type="text/javascript" src="./js/min/bycompany.min.js"></script>
+<!-- Modal Trigger -->
+<script t ype="text/javascript">
+  $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>
+
+<!-- Modal Structure -->
+<div id="modal5" class="modal">
+  <div class="modal-content">
+    <h4>Empresas com maior recebimento</h4>
+    <p class="flow-text">
+      Uma tabela com as 100 empresas que mais receberam durante o ano, assim como seu CNPJ/CPF e o valor total.
+    </p>
+    <h6>Cálculo: Somatório de valor de que cada empresa recebeu no ano</h6>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-close waves-effect waves-green btn-flat">Voltar</a>
+  </div>
 </div>

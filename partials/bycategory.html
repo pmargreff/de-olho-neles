@@ -18,6 +18,11 @@
       </div>
       
     </div>
+    <div class="col s6">
+      <p class="flow-text">
+        Total: R$ <strong id="totalspentbydeputy"></strong>
+      </p>
+    </div>
     <!-- Google fonts -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
@@ -29,6 +34,30 @@
     
     <div class="radarChart"></div>
   </div>
+  <a class="waves-effect waves-light btn lime accent-3 black-text" href="#modal4"><i class="material-icons left">live_help</i>Entenda</a>
+  
 </div>
 
-<script type="text/javascript" src="./js/min/bycategory.min.js"></script>
+<script type="text/javascript" src="./js/bycategory.js"></script>
+
+<!-- Modal Trigger -->
+<script t ype="text/javascript">
+  $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
+</script>
+
+<!-- Modal Structure -->
+<div id="modal4" class="modal">
+  <div class="modal-content">
+    <h4>Valor por área</h4>
+    <p class="flow-text">
+      O valor que cada deputado gastou por área (de um total de 18 áreas) durante todo tempo que ocupou o cargo de deputado (se houve mais de um mandato é mostrado o somatório de todos mandatos).   
+    </p>
+    <h6>Cálculo: Somatório do valor de cada categoria desde que o deputa entrou na câmara até o determinado momento</h6>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-close waves-effect waves-green btn-flat">Voltar</a>
+  </div>
+</div>

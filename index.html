@@ -1,14 +1,16 @@
 <!DOCTYPE html>
+<meta charset="utf-8">
 <html ng-app="serenata-de-amor-visualization" lang="en">
 <head>
-  <title>De Olho Neles</title>
+  <title>De olho neles</title>
   
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <!--Import Google Icon Font-->
   <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Import materialize.css-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
   <link href="css/main.css" type="text/css" rel="stylesheet" media="screen,projection"/>  
   
   
@@ -26,6 +28,8 @@
   d3version3 = d3;   
   </script>
   
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,700italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
   <script src="http://d3js.org/queue.v1.min.js"></script>
   
   <link href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.4/nv.d3.min.css" rel="stylesheet" type="text/css">
@@ -37,8 +41,10 @@
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/heatmap.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+ 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
   
   <script type="text/javascript" src="js/main.js"></script>
@@ -51,17 +57,17 @@
   <body>
     
     <ul id="slide-out" class="side-nav fixed" >
-      <li><a ui-sref="total" ui-sref-active="active">Total Mensal</a></li>
-      <li><a ui-sref="bystate">Média por estado</a></li>
+      <li><a ui-sref="bycategory" ui-sref-active="active">Valor por deputado</a></li>
+      <li><a ui-sref="total">Total Mensal</a></li>
       <li><a ui-sref="bycompany">Empresas com maior recebimento</a></li>
-      <li><a ui-sref="bycategory">Valor por área</a></li>
       <li><a ui-sref="party">Média por partido</a></li>
+      <li><a ui-sref="bystate">Porcentagem utilizada por estado</a></li>
       <li><a ui-sref="about">Informações</a></li>
     </ul>
     <nav class="nav-color">
       <div class="nav-wrapper">
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-        <a href="#" class="brand-logo center"> <img src="./images/de_olho_neles.png" style="width:64px; height: 64px"></a>
+        <a href="#" class="brand-logo center"> <img src="./images/Icone.png" style="width:110px; height: 66px"></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
         </ul>
       </div>
@@ -69,8 +75,6 @@
     <div class="row">
       <div  class="col s10 offset-s1" ui-view></div>
     </div>
-    <style media="screen">
-    </style>
   </body>
 </main>
 <script type="text/javascript">

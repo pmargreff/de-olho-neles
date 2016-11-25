@@ -29,13 +29,13 @@ var radarChartOptions = {
 //Load the data and Call function to draw the Radar chart
 d3.json("./data/bypersonandsubquota.json", function(error, data){
   person_data = data;
-
+  
   d3.csv("./data/bypersonandstate.csv", function(error, data){
     state_data = data;
     states = (array_unique(data.map(function(d) { return d.state; })));
     createStateSelect(states);
   });
-
+  
 });
 
 
@@ -58,6 +58,15 @@ $("#statelist").on('change', function(){
 $("#personlist").on('change', function(){
   var selVal = $("#personlist").val();
   newData = searchPerson(selVal);
+  
+  totalarray = newData[0].values;
+  var total = 0;
+  for (var i = 0; i < totalarray.length; i++) {
+    total += totalarray[i].value;
+  }
+  
+  $("#totalspentbydeputy").html(total.toFixed(0));
+  
   RadarChart(".radarChart", newData, radarChartOptions);
 });
 
@@ -82,7 +91,7 @@ function createStateSelect(states) {
 
 function createPersonSelect(state) {
   $('#personlist').empty();
-
+  
   for (var i = 0; i < state_data.length; i++) {
     if (state_data[i].state == state) {
       $('#personlist')
@@ -91,12 +100,32 @@ function createPersonSelect(state) {
   }
   
   $('select').material_select();
-
+  
   var selVal = $("#personlist").val();
   newData = searchPerson(selVal);
+  
+  totalarray = newData[0].values;
+  var total = 0;
+  for (var i = 0; i < totalarray.length; i++) {
+    total += totalarray[i].value;
+  }
+  
+  $("#totalspentbydeputy").html(total.toFixed(0));
+  
   RadarChart(".radarChart", newData, radarChartOptions);
-
 }
+
+function chunk(str, n) {
+  var ret = [];
+  var i;
+  var len;
+  
+  for(i = 0, len = str.length; i < len; i += n) {
+    ret.push(str.substr(i, n))
+  }
+  
+  return ret
+};
 
 $(document).ready(function() {
   $('select').material_select();
