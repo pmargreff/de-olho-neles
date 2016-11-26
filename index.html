@@ -52,32 +52,66 @@
   
 </head>
 
-<main>
+<!--<main>-->
   
   <body>
     
-    <ul id="slide-out" class="side-nav fixed" >
-      <li><a ui-sref="bycategory" ui-sref-active="active">Valor por deputado</a></li>
-      <li><a ui-sref="total">Total Mensal</a></li>
-      <li><a ui-sref="bycompany">Empresas com maior recebimento</a></li>
-      <li><a ui-sref="party">Média por partido</a></li>
-      <li><a ui-sref="bystate">Porcentagem utilizada por estado</a></li>
-      <li><a ui-sref="about">Informações</a></li>
-    </ul>
-    <nav class="nav-color">
-      <div class="nav-wrapper">
-        <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
-        <a href="#" class="brand-logo center"> <img src="./images/Icone.png" style="width:110px; height: 66px"></a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-        </ul>
-      </div>
-    </nav>
-    <div class="row">
-      <div  class="col s10 offset-s1" ui-view></div>
+    <main id="menu" >
+      <ul id="slide-out" class="side-nav fixed" >
+        <li><a ui-sref="bycategory" ui-sref-active="active">Valor por deputado</a></li>
+        <li><a ui-sref="total">Total Mensal</a></li>
+        <li><a ui-sref="bycompany">Empresas com maior recebimento</a></li>
+        <li><a ui-sref="party">Média por partido</a></li>
+        <li><a ui-sref="bystate">Porcentagem utilizada por estado</a></li>
+        <li><a ui-sref="about">Informações</a></li>
+        <li class="option deputado">
+          <a href="">deputados</a>
+        </li>
+        <li class="option senador">
+          <a href="">senadores</a>
+        </li>
+      </ul>
+      <nav class="nav-color bg-color-deputado">
+        <div class="nav-wrapper">
+          <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+          <a href="#" class="brand-logo center"> <img src="./images/Icone.png" style="width:110px; height: 66px"></a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+          </ul>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col s10 offset-s1" ui-view >      
+        </div>  
+      </div>  
+    </main>
+    
+
+    <div class="home background" id="choose">
+      <a href="/#/total" >
+        <div class="left">
+          deputados
+        </div>
+      </a>
+      
+      <a href="">
+        <div class="right">
+          senadores
+        </div>  
+      </a>
+      
+      <div class="background"></div>
     </div>
+
   </body>
-</main>
+<!--</main>-->
 <script type="text/javascript">
+  $(window).load(function(){
+    var url = window.location.href;
+    url = url.split('/');
+    if(url[4]===""){
+      $('#menu').hide();
+    }
+  });
   $(".button-collapse").sideNav();
 </script>
 </html>
